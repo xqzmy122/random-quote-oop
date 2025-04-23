@@ -3,10 +3,7 @@ class Quote {
     this.id = id
     this.text = text
     this.author = author
-  }
-
-  toString() {
-    return `This quote has id = ${id} and author ${author}`
+    this.isFavorite = false
   }
 }
 

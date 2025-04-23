@@ -1,14 +1,27 @@
-class Quote {
-  constructor(id, text, author) {
-    this.id = id
-    this.text = text
-    this.author = author
+import RandomQuote from "./src/utils/RandomQuote.js";
+
+class RandomQuotesApp {
+  constructor() {
+    this.quoteTextCont = document.querySelector('.quote-text')
+    this.quoteAuthorCont = document.querySelector('.quote-author')
+    this.quoteButton = document.querySelector('.generate-quote')
+    this.currentQuote = null
+
+    this.init()
   }
 
-  toString() {
-    return `This quote has id = ${this.id} and author ${this.author}`
+  getRandomQuote() {
+    const randomQuote = RandomQuote.getRandomQuote()
+    this.currentQuote = randomQuote
+
+    const {text, author} = this.currentQuote
+    this.quoteTextCont.textContent = text
+    this.quoteAuthorCont.textContent = author 
+  }
+
+  init() {
+    this.quoteButton.addEventListener('click', () => this.getRandomQuote())
   }
 }
 
-const firstQuote = new Quote('1', 'hello, World!', 'Miron')
-console.log(firstQuote)
+new RandomQuotesApp()
