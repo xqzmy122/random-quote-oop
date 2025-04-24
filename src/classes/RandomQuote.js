@@ -1,11 +1,24 @@
-import quotes from '../data/quotes.js'
-import MathUtils from './MathUtils.js'
+// import quotes from '../data/quotes.js'
+// import MathUtils from '../utils/MathUtils.js'
 import Quote from './Quote.js'
 
 class RandomQuote {
-  static getRandomQuote() {
-    const {id, quote, author} = quotes[MathUtils.generateRandomInt(quotes.length)]
-    return new Quote(id, quote, author)
+  static async getRandomQuote() {
+  try {
+    const response = await fetch('https://quoteslate.vercel.app/api/quotes/random')
+    if (!response.ok) throw new Error(`Ошибка API: ${response.status}`)
+
+    const data = await response.json()
+    if (!data?.id || !data?.quote || !data?.author) {
+      throw new Error("Некорректные данные цитаты");
+    }
+
+    return new Quote(data.id, data.quote, data.author)
+  }
+  catch(error) {
+    console.error('Mistake in RandomQuote', error)
+    throw error
+  }
   }
 }
 
